@@ -71,6 +71,9 @@ namespace armadaLauncher
         {
             try
             {
+                if (requires_update("001","config.xml",getHash(".\\config.xml"))){
+                    update_sync_file("001", ".\\","config.xml");
+                }
                 var config = XDocument.Load(@".\\config.xml");
                 foreach (XElement x in config.Elements("config").Elements("servers").Elements("server"))
                 {
@@ -231,6 +234,32 @@ namespace armadaLauncher
             double percentage = bytesIn / totalBytes * 100;
             setPb2Value(int.Parse(Math.Truncate(percentage).ToString()));
         }
+        private void update_sync_file(string id, string path, string file_name){
+            try
+            {
+                WebClient client = new WebClient();
+                client = new WebClient();
+                string zip_file = path + file_name + ".tmp";
+                string dest_file = path + file_name;
+                string url = "http://armada-azteca.com/azteca/launcher/" + id + "/files/" + file_name + ".gz";
+                client.DownloadFile(url, zip_file);
+                using (FileStream outFile = File.Create(dest_file))
+                {
+                    using (FileStream inFile = File.OpenRead(zip_file))
+                    {
+                        using (GZipStream Decompress = new GZipStream(inFile, CompressionMode.Decompress))
+                        {
+                            Decompress.CopyTo(outFile);
+                        }
+                    }
+                }
+                File.Delete(zip_file);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Error Descargando y Actualizando: " + file_name + "\n" + e.Message, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         // **************       FUNCTION               ************
         private void DownloadFile(string url, string path, string dest_file, string zip_file, AutoResetEvent notify)
         {
@@ -269,7 +298,7 @@ namespace armadaLauncher
             catch (Exception e)
             {
                 string file_name = "Armada";
-                MessageBox.Show("Error actualizando archivo: " + file_name + "\n" + e.Message + "\n" + e.StackTrace, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error actualizando archivo: " + file_name + "\n" + e.Message, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         // **************       FUNCTION               ************
