@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="monito.ico" />
+    <None Include="Resources\EnhancedGlassButton.dll" />
     <None Include="Resources\15107_wpm_lowres.png" />
   </ItemGroup>
   <ItemGroup>

@@ -71,6 +71,16 @@ namespace armadaLauncher.Properties {
         }
         
         /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Byte[].
+        /// </summary>
+        internal static byte[] EnhancedGlassButton {
+            get {
+                object obj = ResourceManager.GetObject("EnhancedGlassButton", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Image11 {
