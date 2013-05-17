@@ -141,6 +141,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="monito.ico" />
+    <None Include="Resources\Folder-icon.png" />
+    <None Include="Resources\edit1.png" />
+    <None Include="Resources\delete1.png" />
+    <None Include="Resources\add1.png" />
+    <None Include="Resources\add.png" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\edit.png" />
+    <None Include="Resources\delete.ico" />
+    <None Include="Resources\edit.ico" />
+    <None Include="Resources\add.ico" />
     <None Include="Resources\EnhancedGlassButton.dll" />
     <None Include="Resources\15107_wpm_lowres.png" />
   </ItemGroup>

@@ -34,22 +34,42 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lstServers = new System.Windows.Forms.ListBox();
+            this.perfiles = new System.Windows.Forms.TabPage();
+            this.grpDetails = new System.Windows.Forms.GroupBox();
+            this.chkAutomatica = new System.Windows.Forms.CheckBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.txtCarpeta = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtNombre = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnRemove = new System.Windows.Forms.Button();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.lstPerfiles = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.reparar = new System.Windows.Forms.TabPage();
-            this.btnOpenFolder = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnOpenConfig = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
+            this.fbdCarpetaPerfil = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1.SuspendLayout();
             this.Servers.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.perfiles.SuspendLayout();
+            this.grpDetails.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.reparar.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.Servers);
+            this.tabControl1.Controls.Add(this.perfiles);
             this.tabControl1.Controls.Add(this.reparar);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
@@ -104,6 +124,181 @@
             this.lstServers.TabIndex = 1;
             this.lstServers.SelectedIndexChanged += new System.EventHandler(this.lstServers_SelectedIndexChanged);
             // 
+            // perfiles
+            // 
+            this.perfiles.Controls.Add(this.grpDetails);
+            this.perfiles.Controls.Add(this.groupBox4);
+            this.perfiles.Controls.Add(this.label2);
+            this.perfiles.Location = new System.Drawing.Point(4, 22);
+            this.perfiles.Name = "perfiles";
+            this.perfiles.Size = new System.Drawing.Size(367, 297);
+            this.perfiles.TabIndex = 2;
+            this.perfiles.Text = "Perfiles";
+            this.perfiles.UseVisualStyleBackColor = true;
+            this.perfiles.Click += new System.EventHandler(this.perfiles_Click);
+            // 
+            // grpDetails
+            // 
+            this.grpDetails.Controls.Add(this.chkAutomatica);
+            this.grpDetails.Controls.Add(this.button2);
+            this.grpDetails.Controls.Add(this.button1);
+            this.grpDetails.Controls.Add(this.txtCarpeta);
+            this.grpDetails.Controls.Add(this.label4);
+            this.grpDetails.Controls.Add(this.txtNombre);
+            this.grpDetails.Controls.Add(this.label3);
+            this.grpDetails.Enabled = false;
+            this.grpDetails.Location = new System.Drawing.Point(3, 187);
+            this.grpDetails.Name = "grpDetails";
+            this.grpDetails.Size = new System.Drawing.Size(356, 100);
+            this.grpDetails.TabIndex = 5;
+            this.grpDetails.TabStop = false;
+            this.grpDetails.Text = "Detalles del Perfil";
+            this.grpDetails.Enter += new System.EventHandler(this.grpDetails_Enter);
+            // 
+            // chkAutomatica
+            // 
+            this.chkAutomatica.AutoSize = true;
+            this.chkAutomatica.Checked = true;
+            this.chkAutomatica.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAutomatica.Location = new System.Drawing.Point(254, 13);
+            this.chkAutomatica.Name = "chkAutomatica";
+            this.chkAutomatica.Size = new System.Drawing.Size(79, 43);
+            this.chkAutomatica.TabIndex = 10;
+            this.chkAutomatica.Text = "Elegir\r\nCarpeta\r\nAutomatica";
+            this.chkAutomatica.UseVisualStyleBackColor = true;
+            this.chkAutomatica.CheckedChanged += new System.EventHandler(this.chkAutomatica_CheckedChanged);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(274, 62);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(61, 26);
+            this.button2.TabIndex = 9;
+            this.button2.Text = "Guardar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.ForeColor = System.Drawing.Color.Transparent;
+            this.button1.Image = global::armadaLauncher.Properties.Resources.Folder_icon;
+            this.button1.Location = new System.Drawing.Point(236, 65);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(23, 20);
+            this.button1.TabIndex = 8;
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_2);
+            // 
+            // txtCarpeta
+            // 
+            this.txtCarpeta.Enabled = false;
+            this.txtCarpeta.Location = new System.Drawing.Point(53, 65);
+            this.txtCarpeta.Name = "txtCarpeta";
+            this.txtCarpeta.Size = new System.Drawing.Size(177, 20);
+            this.txtCarpeta.TabIndex = 3;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 68);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(47, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Carpeta:";
+            // 
+            // txtNombre
+            // 
+            this.txtNombre.Location = new System.Drawing.Point(53, 28);
+            this.txtNombre.Name = "txtNombre";
+            this.txtNombre.Size = new System.Drawing.Size(177, 20);
+            this.txtNombre.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 31);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(47, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Nombre:";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.btnEdit);
+            this.groupBox4.Controls.Add(this.btnRemove);
+            this.groupBox4.Controls.Add(this.btnAdd);
+            this.groupBox4.Controls.Add(this.lstPerfiles);
+            this.groupBox4.Location = new System.Drawing.Point(3, 10);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(155, 171);
+            this.groupBox4.TabIndex = 4;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Perfiles";
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEdit.ForeColor = System.Drawing.Color.Transparent;
+            this.btnEdit.Image = global::armadaLauncher.Properties.Resources.edit1;
+            this.btnEdit.Location = new System.Drawing.Point(109, 133);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(28, 29);
+            this.btnEdit.TabIndex = 7;
+            this.btnEdit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnEdit.UseVisualStyleBackColor = true;
+            this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnRemove
+            // 
+            this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRemove.ForeColor = System.Drawing.Color.Transparent;
+            this.btnRemove.Image = global::armadaLauncher.Properties.Resources.delete1;
+            this.btnRemove.Location = new System.Drawing.Point(58, 133);
+            this.btnRemove.Name = "btnRemove";
+            this.btnRemove.Size = new System.Drawing.Size(28, 29);
+            this.btnRemove.TabIndex = 6;
+            this.btnRemove.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnRemove.UseVisualStyleBackColor = true;
+            this.btnRemove.Click += new System.EventHandler(this.btnRemove_Click);
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAdd.ForeColor = System.Drawing.Color.Transparent;
+            this.btnAdd.Image = global::armadaLauncher.Properties.Resources.add1;
+            this.btnAdd.Location = new System.Drawing.Point(6, 133);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(28, 29);
+            this.btnAdd.TabIndex = 5;
+            this.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // lstPerfiles
+            // 
+            this.lstPerfiles.FormattingEnabled = true;
+            this.lstPerfiles.Location = new System.Drawing.Point(6, 19);
+            this.lstPerfiles.Name = "lstPerfiles";
+            this.lstPerfiles.Size = new System.Drawing.Size(131, 108);
+            this.lstPerfiles.TabIndex = 1;
+            this.lstPerfiles.SelectedIndexChanged += new System.EventHandler(this.lstPerfiles_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoEllipsis = true;
+            this.label2.AutoSize = true;
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label2.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(164, 38);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(195, 119);
+            this.label2.TabIndex = 3;
+            this.label2.Text = resources.GetString("label2.Text");
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
             // reparar
             // 
             this.reparar.Controls.Add(this.groupBox3);
@@ -115,26 +310,6 @@
             this.reparar.TabIndex = 1;
             this.reparar.Text = "Reparar";
             this.reparar.UseVisualStyleBackColor = true;
-            // 
-            // btnOpenFolder
-            // 
-            this.btnOpenFolder.Location = new System.Drawing.Point(30, 34);
-            this.btnOpenFolder.Name = "btnOpenFolder";
-            this.btnOpenFolder.Size = new System.Drawing.Size(75, 23);
-            this.btnOpenFolder.TabIndex = 0;
-            this.btnOpenFolder.Text = "Abrir Carpeta";
-            this.btnOpenFolder.UseVisualStyleBackColor = true;
-            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.btnOpenFolder);
-            this.groupBox2.Location = new System.Drawing.Point(23, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(138, 85);
-            this.groupBox2.TabIndex = 1;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Carpeta Principal";
             // 
             // groupBox3
             // 
@@ -156,6 +331,31 @@
             this.btnOpenConfig.UseVisualStyleBackColor = true;
             this.btnOpenConfig.Click += new System.EventHandler(this.btnOpenConfig_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.btnOpenFolder);
+            this.groupBox2.Location = new System.Drawing.Point(23, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(138, 85);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Carpeta Principal";
+            // 
+            // btnOpenFolder
+            // 
+            this.btnOpenFolder.Location = new System.Drawing.Point(30, 34);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(75, 23);
+            this.btnOpenFolder.TabIndex = 0;
+            this.btnOpenFolder.Text = "Abrir Carpeta";
+            this.btnOpenFolder.UseVisualStyleBackColor = true;
+            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
+            // 
+            // fbdCarpetaPerfil
+            // 
+            this.fbdCarpetaPerfil.RootFolder = System.Environment.SpecialFolder.CommonAdminTools;
+            this.fbdCarpetaPerfil.HelpRequest += new System.EventHandler(this.fbdCarpetaPerfil_HelpRequest);
+            // 
             // frm_options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -164,6 +364,8 @@
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "frm_options";
             this.Text = "Opciones";
             this.Load += new System.EventHandler(this.frm_options_Load);
@@ -171,9 +373,14 @@
             this.Servers.ResumeLayout(false);
             this.Servers.PerformLayout();
             this.groupBox1.ResumeLayout(false);
+            this.perfiles.ResumeLayout(false);
+            this.perfiles.PerformLayout();
+            this.grpDetails.ResumeLayout(false);
+            this.grpDetails.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
             this.reparar.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -190,6 +397,22 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button btnOpenConfig;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TabPage perfiles;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.GroupBox grpDetails;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ListBox lstPerfiles;
+        private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnRemove;
+        private System.Windows.Forms.TextBox txtNombre;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox txtCarpeta;
+        private System.Windows.Forms.FolderBrowserDialog fbdCarpetaPerfil;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.CheckBox chkAutomatica;
 
 
     }

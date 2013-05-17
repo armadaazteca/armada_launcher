@@ -20,6 +20,7 @@ namespace armadaLauncher
     public partial class Form1 : Form
     {
         private LauncherSettings launchSettings = new LauncherSettings();
+        public List<string> carpeta_perfiles = new List<string>();
         public Form1()
         {
             InitializeComponent();
@@ -67,6 +68,20 @@ namespace armadaLauncher
             }
         }
 
+        public void cargaPerfiles()
+        {
+            cmbProfile.Items.Clear();
+            cmbProfile.Items.Add("Default");
+            carpeta_perfiles.Clear();
+            foreach (string profile in launchSettings.profileList) // Loop through List with foreach
+            {
+                string[] profile_data = profile.Split(',');
+                cmbProfile.Items.Add(profile_data[0]);
+                carpeta_perfiles.Add(profile_data[1]);
+            }
+            cmbProfile.SelectedIndex = launchSettings.defaultProfileIndex;
+        }
+
         private void Form1_Load_1(object sender, EventArgs e)
         {
             try
@@ -81,6 +96,9 @@ namespace armadaLauncher
                     lstExe.Items.Add(x.Element("path").Value + x.Element("exe").Value);
                 }
                 cmbServers.SelectedIndex = launchSettings.defaultServerIndex;
+                //foreach (string perfil in launchSettings.profileList)
+                cargaPerfiles();
+                
                 this.chkGamemaster.Checked = launchSettings.gameMaster;
             }catch (Exception ex){
                 MessageBox.Show("Error al leer el archivo de configuracion: " + "\n" + ex.Message, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -393,11 +411,22 @@ namespace armadaLauncher
                 string working_dir = Path.GetDirectoryName(lstExe.Text) + "\\";
                 if (this.chkGamemaster.Checked)
                     psi.Arguments = "gamemaster";
+
+                if (cmbProfile.SelectedIndex > 0)
+                {
+                    psi.Arguments = psi.Arguments + " path \"" + carpeta_perfiles[cmbProfile.SelectedIndex - 1] + "\"";
+                }
                 psi.WindowStyle = ProcessWindowStyle.Maximized;
                 psi.UseShellExecute = false;
                 psi.WorkingDirectory = working_dir;
-                Process.Start(psi);
-                Application.Exit();
+                Process cliente = Process.Start(psi);
+                notifyIcon1.Visible = true;
+                notifyIcon1.ShowBalloonTip(500);
+                this.Hide();
+                //cliente.WaitForExit();
+                //MessageBox.Show(cliente.ExitCode.ToString());
+                //this.Show();
+                //Application.Exit();
             }
             catch (Exception ee){
                 MessageBox.Show("Error ejecutando: " + lstExe.Text + "\n" + ee.Message, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -408,6 +437,8 @@ namespace armadaLauncher
         {
             frm_options options_form = new frm_options();
             options_form.ShowDialog();
+            launchSettings.Reload();
+            cargaPerfiles();
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -451,6 +482,17 @@ namespace armadaLauncher
         {
             launchSettings.gameMaster = this.chkGamemaster.Checked;
             launchSettings.Save();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            launchSettings.defaultProfileIndex = cmbProfile.SelectedIndex;
+            launchSettings.Save();
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
         }
 
     }
