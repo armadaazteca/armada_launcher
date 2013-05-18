@@ -10,6 +10,8 @@ using System.Xml.Linq;
 using System.Configuration;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
+using System.Security.Cryptography;
 
 namespace armadaLauncher
 {
@@ -35,9 +37,35 @@ namespace armadaLauncher
             };
             myToolTip.SetToolTip(groupBox1, "Selecciona el server que quieres que se seleccione por default al abrir el programa.");
             myToolTip.SetToolTip(lstServers, "Selecciona el server que quieres que se seleccione por default al abrir el programa.");
+            myToolTip.SetToolTip(chkActivateGameMaster, "Si activas esta opción, en la ventana principal podras elegir si quieres abrir el cliente con GameMaster para poder usar MC.");
+            myToolTip.SetToolTip(chkDisableUpdates, "Si activas esta opción, el cliente no se actualizara automaticamente.");
+            myToolTip.SetToolTip(lstPerfiles, "Todos los perfiles para tus hotkeys.");
             //if (launchSettings.profileList == null)
-            loadPerfiles();
-            //fbdCarpetaPerfil.RootFolder 
+            //this.Invoke(loadPerfiles);
+            ///LOADPERFILES
+            lstPerfiles.Items.Clear();
+            lstPerfiles.Items.Add("Default");
+            //carpeta.Clear();
+            foreach (string profile in launchSettings.profileList) // Loop through List with foreach
+            {
+                string[] profile_data = profile.Split(',');
+                lstPerfiles.Items.Add(profile_data[0]);
+                carpeta.Add(profile_data[1]);
+            }
+            txtCarpeta.Text = "";
+            txtNombre.Text = "";
+            chkAutomatica.Checked = true;
+            ///LOADPERFILES
+            //fbdCarpetaPerfil.RootFolder
+
+            if (launchSettings.showGameMaster == 1)
+                chkActivateGameMaster.Checked = true;
+            else
+                chkActivateGameMaster.Checked = false;
+            if (launchSettings.disableUpdates == 1)
+                chkDisableUpdates.Checked = true;
+            else
+                chkDisableUpdates.Checked = false;
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -70,6 +98,8 @@ namespace armadaLauncher
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             loadServers();
+            if (tabControl1.SelectedTab.Name == "gmOptions")
+                gmOptions_Click(sender, e);
         }
 
         private void loadServers()
@@ -177,8 +207,12 @@ namespace armadaLauncher
             }
         }
 
-        private void loadPerfiles()
+
+
+        private static void loadPerfiles(ListBox lstPerfiles, List<string> carpeta, LauncherSettings launchSettings, TextBox txtCarpeta, TextBox txtNombre, CheckBox chkAutomatica)
         {
+            
+            ///LOADPERFILES
             lstPerfiles.Items.Clear();
             lstPerfiles.Items.Add("Default");
             carpeta.Clear();
@@ -191,6 +225,7 @@ namespace armadaLauncher
             txtCarpeta.Text = "";
             txtNombre.Text = "";
             chkAutomatica.Checked = true;
+            ///LOADPERFILES
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -232,7 +267,20 @@ namespace armadaLauncher
                         launchSettings.profileList.Add(perfil_string);
                     launchSettings.Save();
                     Directory.CreateDirectory(txtCarpeta.Text.Trim());
-                    loadPerfiles();
+                    ///LOADPERFILES
+                    lstPerfiles.Items.Clear();
+                    lstPerfiles.Items.Add("Default");
+                    carpeta.Clear();
+                    foreach (string profile in launchSettings.profileList) // Loop through List with foreach
+                    {
+                        string[] profile_data = profile.Split(',');
+                        lstPerfiles.Items.Add(profile_data[0]);
+                        carpeta.Add(profile_data[1]);
+                    }
+                    txtCarpeta.Text = "";
+                    txtNombre.Text = "";
+                    chkAutomatica.Checked = true;
+                    ///LOADPERFILES
                 }
             }
         }
@@ -259,10 +307,111 @@ namespace armadaLauncher
             else
             {
                 launchSettings.profileList.Remove(lstPerfiles.Text+","+carpeta[lstPerfiles.SelectedIndex-1]);
+                launchSettings.defaultProfileIndex = 0;
                 launchSettings.Save();
                 MessageBox.Show("Listo. Perfil Eliminado", "Vientos", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                loadPerfiles();
+                ///LOADPERFILES
+                lstPerfiles.Items.Clear();
+                lstPerfiles.Items.Add("Default");
+                carpeta.Clear();
+                foreach (string profile in launchSettings.profileList) // Loop through List with foreach
+                {
+                    string[] profile_data = profile.Split(',');
+                    lstPerfiles.Items.Add(profile_data[0]);
+                    carpeta.Add(profile_data[1]);
+                }
+                txtCarpeta.Text = "";
+                txtNombre.Text = "";
+                chkAutomatica.Checked = true;
+                ///LOADPERFILES
             }
+        }
+
+        private void reparar_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gmOptions_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string promptValue = Prompt.ShowDialog("Password:", "Escribe el Password",this.Icon);
+                WebClient client = new WebClient();
+                client = new WebClient();
+                string url = "http://armada-azteca.com/azteca/launcher/passwordGMS.txt";
+                string password = client.DownloadString(url);
+                if (MD5Hash(promptValue) == password.Trim())
+                    groupBox5.Visible = true;
+                else
+                {
+                    groupBox5.Visible = false;
+                    MessageBox.Show("Contraseña Incorrecta!", "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("Error al Obtener el Password." + "\n" + err.Message, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                groupBox5.Visible = false;
+            }
+        }
+
+        private static string MD5Hash(string text)
+        {
+            MD5 md5 = new MD5CryptoServiceProvider();
+
+            //compute hash from the bytes of text
+            md5.ComputeHash(ASCIIEncoding.ASCII.GetBytes(text));
+
+            //get hash result after compute it
+            byte[] result = md5.Hash;
+
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < result.Length; i++)
+            {
+                //change it into 2 hexadecimal digits
+                //for each byte
+                strBuilder.Append(result[i].ToString("x2"));
+            }
+
+            return strBuilder.ToString();
+        }
+
+        private void chkActivateGameMaster_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (chkActivateGameMaster.Checked)
+            {
+                launchSettings.showGameMaster = 1;
+            }
+            else
+            {
+                launchSettings.showGameMaster = 0;
+                launchSettings.gameMaster = false;
+            }
+            launchSettings.Save();
+        }
+
+        private void chkDisableUpdates_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDisableUpdates.Checked)
+            {
+                launchSettings.disableUpdates = 1;
+            }
+            else
+            {
+                launchSettings.disableUpdates = 0;
+            }
+            launchSettings.Save();
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            gmOptions_Click(sender,e);
+        }
+
+        private void groupBox5_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 
@@ -274,6 +423,22 @@ namespace armadaLauncher
         {
             get { return (int)this["defaultServerIndex"]; }
             set { this["defaultServerIndex"] = value; }
+        }
+
+        [UserScopedSettingAttribute()]
+        [DefaultSettingValueAttribute("0")]
+        public int showGameMaster
+        {
+            get { return (int)this["showGameMaster"]; }
+            set { this["showGameMaster"] = value; }
+        }
+
+        [UserScopedSettingAttribute()]
+        [DefaultSettingValueAttribute("0")]
+        public int disableUpdates
+        {
+            get { return (int)this["disableUpdates"]; }
+            set { this["disableUpdates"] = value; }
         }
 
         [UserScopedSettingAttribute()]
@@ -298,6 +463,32 @@ namespace armadaLauncher
         {
             get { return (bool)this["gameMaster"]; }
             set { this["gameMaster"] = value; }
+        }
+    }
+    public static class Prompt
+    {
+        public static string ShowDialog(string text, string caption, Icon icono)
+        {
+            Form prompt = new Form();
+            prompt.Icon = icono;
+            prompt.Width = 200;
+            prompt.Height = 140;
+            prompt.Text = caption;
+            prompt.FormBorderStyle = FormBorderStyle.FixedDialog;
+            Label textLabel = new Label() { Left = 10, Top = 23, Text = text };
+            textLabel.AutoSize = true;
+            TextBox textBox = new TextBox() { Left = 70, Top = 20, Width = 100 };
+            textBox.UseSystemPasswordChar = true;
+            //textBox.KeyDown += new KeyEventHandler(tb_KeyDown);
+            textBox.KeyDown += (sender, e) => { if (e.KeyCode == Keys.Enter) prompt.Close(); };
+            Button confirmation = new Button() { Text = "Ok", Left = 50, Width = 100, Top = 60 };
+            confirmation.Click += (sender, e) => { prompt.Close(); };
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(textLabel);
+            prompt.Controls.Add(textBox);
+            prompt.StartPosition = FormStartPosition.CenterParent;
+            prompt.ShowDialog();
+            return textBox.Text;
         }
     }
 }

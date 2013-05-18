@@ -68,20 +68,6 @@ namespace armadaLauncher
             }
         }
 
-        public void cargaPerfiles()
-        {
-            cmbProfile.Items.Clear();
-            cmbProfile.Items.Add("Default");
-            carpeta_perfiles.Clear();
-            foreach (string profile in launchSettings.profileList) // Loop through List with foreach
-            {
-                string[] profile_data = profile.Split(',');
-                cmbProfile.Items.Add(profile_data[0]);
-                carpeta_perfiles.Add(profile_data[1]);
-            }
-            cmbProfile.SelectedIndex = launchSettings.defaultProfileIndex;
-        }
-
         private void Form1_Load_1(object sender, EventArgs e)
         {
             try
@@ -96,12 +82,17 @@ namespace armadaLauncher
                     lstExe.Items.Add(x.Element("path").Value + x.Element("exe").Value);
                 }
                 cmbServers.SelectedIndex = launchSettings.defaultServerIndex;
-                //foreach (string perfil in launchSettings.profileList)
-                cargaPerfiles();
+
+                if (launchSettings.showGameMaster == 1)
+                    chkGamemaster.Visible = true;
+                else
+                    chkGamemaster.Visible = false;
                 
-                this.chkGamemaster.Checked = launchSettings.gameMaster;
+                chkGamemaster.Checked = launchSettings.gameMaster;
+                //cargaPerfiles();
+                //timer = new System.Threading.Timer(obj => { cargaPerfiles(); }, null, 1000, System.Threading.Timeout.Infinite);
             }catch (Exception ex){
-                MessageBox.Show("Error al leer el archivo de configuracion: " + "\n" + ex.Message, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al leer el archivo de configuracion: " + "\n" + ex.Message + "\n" + ex.StackTrace, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
             }
         }
@@ -334,9 +325,11 @@ namespace armadaLauncher
             }
         }
         // **************       FUNCTION               ************
-        public static bool requires_update(string id,string file_name, string current_hash)
+        public bool requires_update(string id,string file_name, string current_hash)
         {
             try{
+                if (launchSettings.disableUpdates == 1)
+                    return false;
                 string URI = "http://armada-azteca.com/azteca/launcher/" + id + "/" + file_name + ".html";
                 System.Net.WebRequest req = System.Net.WebRequest.Create(URI);
                 System.Net.WebResponse resp = req.GetResponse();
@@ -409,7 +402,7 @@ namespace armadaLauncher
             try{
                 var psi = new ProcessStartInfo(lstExe.Text);
                 string working_dir = Path.GetDirectoryName(lstExe.Text) + "\\";
-                if (this.chkGamemaster.Checked)
+                if (this.chkGamemaster.Checked && this.chkGamemaster.Visible == true)
                     psi.Arguments = "gamemaster";
 
                 if (cmbProfile.SelectedIndex > 0)
@@ -493,6 +486,36 @@ namespace armadaLauncher
         private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             this.Show();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void cargaPerfiles()
+        {
+            MessageBox.Show("Yes");
+            this.cmbProfile.Items.Clear();
+            this.cmbProfile.Items.Add("Default");
+            this.carpeta_perfiles.Clear();
+            //            this.carpeta_perfiles = new List<string>();
+            foreach (string profile in launchSettings.profileList) // Loop through List with foreach
+            {
+                string[] profile_data = profile.Split(',');
+                this.cmbProfile.Items.Add(profile_data[0]);
+                this.carpeta_perfiles.Add(profile_data[1]);
+            }
+            this.cmbProfile.SelectedIndex = launchSettings.defaultProfileIndex;
+        }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            //cargaPerfiles();
         }
 
     }

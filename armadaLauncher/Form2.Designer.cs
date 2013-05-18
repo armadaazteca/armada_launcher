@@ -54,6 +54,12 @@
             this.btnOpenConfig = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnOpenFolder = new System.Windows.Forms.Button();
+            this.gmOptions = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.chkDisableUpdates = new System.Windows.Forms.CheckBox();
+            this.chkActivateGameMaster = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.fbdCarpetaPerfil = new System.Windows.Forms.FolderBrowserDialog();
             this.tabControl1.SuspendLayout();
             this.Servers.SuspendLayout();
@@ -64,6 +70,8 @@
             this.reparar.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.gmOptions.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -71,6 +79,7 @@
             this.tabControl1.Controls.Add(this.Servers);
             this.tabControl1.Controls.Add(this.perfiles);
             this.tabControl1.Controls.Add(this.reparar);
+            this.tabControl1.Controls.Add(this.gmOptions);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -310,6 +319,7 @@
             this.reparar.TabIndex = 1;
             this.reparar.Text = "Reparar";
             this.reparar.UseVisualStyleBackColor = true;
+            this.reparar.Click += new System.EventHandler(this.reparar_Click);
             // 
             // groupBox3
             // 
@@ -351,6 +361,82 @@
             this.btnOpenFolder.UseVisualStyleBackColor = true;
             this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
+            // gmOptions
+            // 
+            this.gmOptions.Controls.Add(this.groupBox5);
+            this.gmOptions.Controls.Add(this.label6);
+            this.gmOptions.Location = new System.Drawing.Point(4, 22);
+            this.gmOptions.Name = "gmOptions";
+            this.gmOptions.Size = new System.Drawing.Size(367, 297);
+            this.gmOptions.TabIndex = 3;
+            this.gmOptions.Text = "GM Options";
+            this.gmOptions.UseVisualStyleBackColor = true;
+            this.gmOptions.Click += new System.EventHandler(this.gmOptions_Click);
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.label5);
+            this.groupBox5.Controls.Add(this.chkDisableUpdates);
+            this.groupBox5.Controls.Add(this.chkActivateGameMaster);
+            this.groupBox5.Location = new System.Drawing.Point(3, 3);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(361, 153);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Opciones del Cliente";
+            this.groupBox5.Visible = false;
+            this.groupBox5.Enter += new System.EventHandler(this.groupBox5_Enter);
+            // 
+            // label5
+            // 
+            this.label5.AutoEllipsis = true;
+            this.label5.AutoSize = true;
+            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label5.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(34, 81);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(279, 41);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Cualquier cambio que hagas en esta pestaña\r\npara que tenga efecto tienes que rein" +
+    "iciar el\r\nArmada Azteca Launcher.";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // chkDisableUpdates
+            // 
+            this.chkDisableUpdates.AutoSize = true;
+            this.chkDisableUpdates.Location = new System.Drawing.Point(6, 42);
+            this.chkDisableUpdates.Name = "chkDisableUpdates";
+            this.chkDisableUpdates.Size = new System.Drawing.Size(215, 17);
+            this.chkDisableUpdates.TabIndex = 2;
+            this.chkDisableUpdates.Text = "Desactivar Actualizaciones Automáticas";
+            this.chkDisableUpdates.UseVisualStyleBackColor = true;
+            this.chkDisableUpdates.CheckedChanged += new System.EventHandler(this.chkDisableUpdates_CheckedChanged);
+            // 
+            // chkActivateGameMaster
+            // 
+            this.chkActivateGameMaster.AutoSize = true;
+            this.chkActivateGameMaster.Location = new System.Drawing.Point(6, 19);
+            this.chkActivateGameMaster.Name = "chkActivateGameMaster";
+            this.chkActivateGameMaster.Size = new System.Drawing.Size(215, 17);
+            this.chkActivateGameMaster.TabIndex = 1;
+            this.chkActivateGameMaster.Text = "Mostrar Opción de GameMaster al Inicio";
+            this.chkActivateGameMaster.UseVisualStyleBackColor = true;
+            this.chkActivateGameMaster.CheckedChanged += new System.EventHandler(this.chkActivateGameMaster_CheckedChanged_1);
+            // 
+            // label6
+            // 
+            this.label6.AutoEllipsis = true;
+            this.label6.AutoSize = true;
+            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label6.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(73, 104);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(195, 28);
+            this.label6.TabIndex = 5;
+            this.label6.Text = "Esta Pestaña Ocupa un Password.\r\nSolo los GMs la Pueden Usar.";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
             // fbdCarpetaPerfil
             // 
             this.fbdCarpetaPerfil.RootFolder = System.Environment.SpecialFolder.CommonAdminTools;
@@ -381,6 +467,10 @@
             this.reparar.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.gmOptions.ResumeLayout(false);
+            this.gmOptions.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -413,6 +503,12 @@
         private System.Windows.Forms.FolderBrowserDialog fbdCarpetaPerfil;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox chkAutomatica;
+        private System.Windows.Forms.TabPage gmOptions;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.CheckBox chkDisableUpdates;
+        private System.Windows.Forms.CheckBox chkActivateGameMaster;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
 
 
     }
