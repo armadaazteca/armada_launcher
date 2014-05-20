@@ -1,4 +1,4 @@
-Armada Azteca Launcher
+Armada Azteca Launcher (WPF Version)
 ===============
 
 Programa que actualiza automaticamente tu cliente de Armada Azteca. Los archivos estan creados en Visual Studio 2012 con c#.
