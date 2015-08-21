@@ -70,15 +70,13 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EnhancedGlassButton">
-      <HintPath>..\..\..\..\..\Desktop\EnhancedGlassButton_dll_for_VS_Toolbox\EnhancedGlassButton.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -92,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BitmapToRegion.cs" />
+    <Compile Include="FileUtil.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +103,39 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlassButton\GlassButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GlassButton\GlassButton.designer.cs">
+      <DependentUpon>GlassButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LibRsync.Core\BlockSign.cs" />
+    <Compile Include="LibRsync.Core\Checksum.cs" />
+    <Compile Include="LibRsync.Core\Compat\Md4SumAlgrorithm.cs" />
+    <Compile Include="LibRsync.Core\Compat\RSyncSignatureStreamWriter.cs" />
+    <Compile Include="LibRsync.Core\Const.cs" />
+    <Compile Include="LibRsync.Core\DeltaEmitter.cs" />
+    <Compile Include="LibRsync.Core\DeltaJob.cs" />
+    <Compile Include="LibRsync.Core\DeltaReadJob.cs" />
+    <Compile Include="LibRsync.Core\IDeltaProcessor.cs" />
+    <Compile Include="LibRsync.Core\ISignatureProcessor.cs" />
+    <Compile Include="LibRsync.Core\IStrongSumAlgrorithm.cs" />
+    <Compile Include="LibRsync.Core\Job.cs" />
+    <Compile Include="LibRsync.Core\NetInt.cs" />
+    <Compile Include="LibRsync.Core\Opcode.cs" />
+    <Compile Include="LibRsync.Core\OpcodePrototypes.cs" />
+    <Compile Include="LibRsync.Core\OpKind.cs" />
+    <Compile Include="LibRsync.Core\PatchProcessor.cs" />
+    <Compile Include="LibRsync.Core\RDiff.cs" />
+    <Compile Include="LibRsync.Core\Rollsum.cs" />
+    <Compile Include="LibRsync.Core\Signature.cs" />
+    <Compile Include="LibRsync.Core\SignatureBuilder.cs" />
+    <Compile Include="LibRsync.Core\SignatureJob.cs" />
+    <Compile Include="LibRsync.Core\SignatureLoadJob.cs" />
+    <Compile Include="LibRsync.Core\StrongSum.cs" />
+    <Compile Include="LibRsync.Core\StrongSumAlgorithm.cs" />
+    <Compile Include="LibRsync.Core\Utils.cs" />
+    <Compile Include="NativeMethods.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -141,6 +173,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="monito.ico" />
+    <None Include="Resources\reload_white_small_5.png" />
+    <None Include="Resources\reload_white_small_3.png" />
+    <None Include="Resources\reload_white_small.png" />
+    <None Include="Resources\minimize_white_small_5.png" />
+    <None Include="Resources\minimize_white_small_3.png" />
+    <None Include="Resources\minimize_white_small.png" />
+    <None Include="Resources\minimize_white_small_4.png" />
+    <None Include="Resources\minimize_white_small_2.png" />
     <None Include="Resources\Folder-icon.png" />
     <None Include="Resources\edit1.png" />
     <None Include="Resources\delete1.png" />
@@ -157,7 +197,7 @@
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 y x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

@@ -50,6 +50,8 @@
             this.lstPerfiles = new System.Windows.Forms.ListBox();
             this.label2 = new System.Windows.Forms.Label();
             this.reparar = new System.Windows.Forms.TabPage();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.btnBorrarTodo = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnOpenConfig = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -68,6 +70,7 @@
             this.grpDetails.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.reparar.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gmOptions.SuspendLayout();
@@ -310,6 +313,7 @@
             // 
             // reparar
             // 
+            this.reparar.Controls.Add(this.groupBox6);
             this.reparar.Controls.Add(this.groupBox3);
             this.reparar.Controls.Add(this.groupBox2);
             this.reparar.Location = new System.Drawing.Point(4, 22);
@@ -320,6 +324,26 @@
             this.reparar.Text = "Reparar";
             this.reparar.UseVisualStyleBackColor = true;
             this.reparar.Click += new System.EventHandler(this.reparar_Click);
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.btnBorrarTodo);
+            this.groupBox6.Location = new System.Drawing.Point(23, 109);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(138, 85);
+            this.groupBox6.TabIndex = 2;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Borrar Todo y Cerrar";
+            // 
+            // btnBorrarTodo
+            // 
+            this.btnBorrarTodo.Location = new System.Drawing.Point(30, 34);
+            this.btnBorrarTodo.Name = "btnBorrarTodo";
+            this.btnBorrarTodo.Size = new System.Drawing.Size(75, 25);
+            this.btnBorrarTodo.TabIndex = 0;
+            this.btnBorrarTodo.Text = "Borrar";
+            this.btnBorrarTodo.UseVisualStyleBackColor = true;
+            this.btnBorrarTodo.Click += new System.EventHandler(this.btnBorrarTodo_Click);
             // 
             // groupBox3
             // 
@@ -357,7 +381,7 @@
             this.btnOpenFolder.Name = "btnOpenFolder";
             this.btnOpenFolder.Size = new System.Drawing.Size(75, 23);
             this.btnOpenFolder.TabIndex = 0;
-            this.btnOpenFolder.Text = "Abrir Carpeta";
+            this.btnOpenFolder.Text = "Abrir";
             this.btnOpenFolder.UseVisualStyleBackColor = true;
             this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
             // 
@@ -465,6 +489,7 @@
             this.grpDetails.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.reparar.ResumeLayout(false);
+            this.groupBox6.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.gmOptions.ResumeLayout(false);
@@ -509,6 +534,8 @@
         private System.Windows.Forms.CheckBox chkActivateGameMaster;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.Button btnBorrarTodo;
 
 
     }

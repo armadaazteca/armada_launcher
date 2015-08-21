@@ -35,27 +35,19 @@ namespace armadaLauncher
                 InitialDelay = 100,
                 ReshowDelay = 500
             };
-            myToolTip.SetToolTip(groupBox1, "Selecciona el server que quieres que se seleccione por default al abrir el programa.");
-            myToolTip.SetToolTip(lstServers, "Selecciona el server que quieres que se seleccione por default al abrir el programa.");
-            myToolTip.SetToolTip(chkActivateGameMaster, "Si activas esta opción, en la ventana principal podras elegir si quieres abrir el cliente con GameMaster para poder usar MC.");
-            myToolTip.SetToolTip(chkDisableUpdates, "Si activas esta opción, el cliente no se actualizara automaticamente.");
-            myToolTip.SetToolTip(lstPerfiles, "Todos los perfiles para tus hotkeys.");
+            myToolTip.SetToolTip(groupBox1, "Selecciona el server que quieres que este seleccionado por default al abrir el programa");
+            myToolTip.SetToolTip(lstServers, "Selecciona el server que quieres que se seleccione por default al abrir el programa");
+            myToolTip.SetToolTip(chkActivateGameMaster, "Si activas esta opción, en la ventana principal podras elegir si quieres abrir el cliente con GameMaster para poder usar MC");
+            myToolTip.SetToolTip(chkDisableUpdates, "Si activas esta opción, el cliente no se actualizara automaticamente");
+            myToolTip.SetToolTip(lstPerfiles, "Todos los perfiles para tus hotkeys");
+            myToolTip.SetToolTip(btnAdd, "Agregar un nuevo perfil");
+            myToolTip.SetToolTip(btnEdit, "Editar el perfil seleccionado");
+            myToolTip.SetToolTip(btnRemove, "Eliminar el perfil seleccionado");
+            myToolTip.SetToolTip(btnBorrarTodo, "Eliminar todos los datos y cerrar el Launcher, esto hara que la siguiente vez que lo abras, se descargen todos los archivos");
+            
             //if (launchSettings.profileList == null)
             //this.Invoke(loadPerfiles);
-            ///LOADPERFILES
-            lstPerfiles.Items.Clear();
-            lstPerfiles.Items.Add("Default");
-            //carpeta.Clear();
-            foreach (string profile in launchSettings.profileList) // Loop through List with foreach
-            {
-                string[] profile_data = profile.Split(',');
-                lstPerfiles.Items.Add(profile_data[0]);
-                carpeta.Add(profile_data[1]);
-            }
-            txtCarpeta.Text = "";
-            txtNombre.Text = "";
-            chkAutomatica.Checked = true;
-            ///LOADPERFILES
+            loadPerfiles();
             //fbdCarpetaPerfil.RootFolder
 
             if (launchSettings.showGameMaster == 1)
@@ -208,8 +200,7 @@ namespace armadaLauncher
         }
 
 
-
-        private static void loadPerfiles(ListBox lstPerfiles, List<string> carpeta, LauncherSettings launchSettings, TextBox txtCarpeta, TextBox txtNombre, CheckBox chkAutomatica)
+        private void loadPerfiles()
         {
             
             ///LOADPERFILES
@@ -226,6 +217,7 @@ namespace armadaLauncher
             txtNombre.Text = "";
             chkAutomatica.Checked = true;
             ///LOADPERFILES
+            ///
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -267,20 +259,7 @@ namespace armadaLauncher
                         launchSettings.profileList.Add(perfil_string);
                     launchSettings.Save();
                     Directory.CreateDirectory(txtCarpeta.Text.Trim());
-                    ///LOADPERFILES
-                    lstPerfiles.Items.Clear();
-                    lstPerfiles.Items.Add("Default");
-                    carpeta.Clear();
-                    foreach (string profile in launchSettings.profileList) // Loop through List with foreach
-                    {
-                        string[] profile_data = profile.Split(',');
-                        lstPerfiles.Items.Add(profile_data[0]);
-                        carpeta.Add(profile_data[1]);
-                    }
-                    txtCarpeta.Text = "";
-                    txtNombre.Text = "";
-                    chkAutomatica.Checked = true;
-                    ///LOADPERFILES
+                    loadPerfiles();
                 }
             }
         }
@@ -310,20 +289,7 @@ namespace armadaLauncher
                 launchSettings.defaultProfileIndex = 0;
                 launchSettings.Save();
                 MessageBox.Show("Listo. Perfil Eliminado", "Vientos", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                ///LOADPERFILES
-                lstPerfiles.Items.Clear();
-                lstPerfiles.Items.Add("Default");
-                carpeta.Clear();
-                foreach (string profile in launchSettings.profileList) // Loop through List with foreach
-                {
-                    string[] profile_data = profile.Split(',');
-                    lstPerfiles.Items.Add(profile_data[0]);
-                    carpeta.Add(profile_data[1]);
-                }
-                txtCarpeta.Text = "";
-                txtNombre.Text = "";
-                chkAutomatica.Checked = true;
-                ///LOADPERFILES
+                loadPerfiles();
             }
         }
 
@@ -334,6 +300,7 @@ namespace armadaLauncher
 
         private void gmOptions_Click(object sender, EventArgs e)
         {
+            groupBox5.Visible = false;
             try
             {
                 string promptValue = Prompt.ShowDialog("Password:", "Escribe el Password",this.Icon);
@@ -413,6 +380,35 @@ namespace armadaLauncher
         {
 
         }
+
+        private void btnBorrarTodo_Click(object sender, EventArgs e)
+        {
+            DialogResult results = MessageBox.Show("Estas seguro que quieres borrar todos los archivos y cerrar el launcher?\nEsto provocara que la siguiente vez que abras el launcher se vuelvan a descargar todos los archivos","Aguas!!",MessageBoxButtons.YesNo,MessageBoxIcon.Warning);
+            if (results == DialogResult.Yes)
+            {
+                try
+                {
+                    var config = XDocument.Load(@".\\config.xml");
+                    int iter = 0;
+                    foreach (XElement x in config.Elements("config").Elements("servers").Elements("server"))
+                    {
+                        string root_path = x.Element("path").Value;
+                        foreach (XElement y in x.Elements("files").Elements("filename"))
+                        {
+                            if (File.Exists(root_path + y.Attribute("name").Value))
+                                File.Delete(root_path + y.Attribute("name").Value);
+                        }
+                        iter++;
+                    }
+                    MessageBox.Show("Listo, Ahora el launcher se cerrará.","Listo",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    Application.Exit();
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("Error eliminando archivos." + "\n" + err.Message, "Tomala!!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 
     sealed class LauncherSettings : ApplicationSettingsBase
@@ -450,7 +446,7 @@ namespace armadaLauncher
         }
 
         [UserScopedSettingAttribute()]
-        //[DefaultSettingValueAttribute("Def")]
+        [DefaultSettingValueAttribute("")]
         public List<string> profileList
         {
             get { return (List<string>)this["profileList"]; }
@@ -486,6 +482,8 @@ namespace armadaLauncher
             prompt.Controls.Add(confirmation);
             prompt.Controls.Add(textLabel);
             prompt.Controls.Add(textBox);
+            prompt.MaximizeBox = false;
+            prompt.MinimizeBox = false;
             prompt.StartPosition = FormStartPosition.CenterParent;
             prompt.ShowDialog();
             return textBox.Text;
