@@ -248,7 +248,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(71, 14);
             this.label3.TabIndex = 24;
-            this.label3.Text = "Version: 1.3.1";
+            this.label3.Text = "Version: 1.3.2";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // btnMinimize
